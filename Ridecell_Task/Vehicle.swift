@@ -95,20 +95,16 @@ struct Vehicle: Codable {
         ]
         """
         
-        // Convert the JSON string to Data
         guard let jsonData = jsonString.data(using: .utf8) else {
             print("Error converting JSON string to Data")
             return
         }
         
         do {
-            // Decode JSON data into an array of Vehicle objects
             let vehicles = try JSONDecoder().decode([Vehicle].self, from: jsonData)
             
-            // Filter out vehicles with missing location data
             let validVehicles = vehicles.filter { $0.lat != nil && $0.lng != nil }
             
-            // Print valid vehicles
             for vehicle in validVehicles {
                 print("Vehicle ID: \(vehicle.id), Latitude: \(vehicle.lat!), Longitude: \(vehicle.lng!)")
             }
